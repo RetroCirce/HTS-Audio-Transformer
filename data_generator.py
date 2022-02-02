@@ -147,7 +147,8 @@ class SEDDataset(Dataset):
             }
         else:
             audio_name = self.fp["audio_name"][s_index].decode()
-            hdf5_path = self.fp["hdf5_path"][s_index].decode().replace("/home/tiger/DB/knut/data/audioset", self.config.dataset_path)
+            hdf5_path = self.fp["hdf5_path"][s_index].decode()
+            # replace("/home/tiger/DB/knut/data/audioset", self.config.dataset_path)
             r_idx = self.fp["index_in_hdf5"][s_index]
             target = self.fp["target"][s_index].astype(np.float32)
             with h5py.File(hdf5_path, "r") as f:

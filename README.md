@@ -122,6 +122,16 @@ Weight Average: python main.py weight_average
 // See config.py for settings of weight averaging
 ```
 
+### Localization on DESED
+```
+CUDA_VISIBLE_DEVICES=1,2,3,4 python main.py test
+// make sure that fl_local=True in config.py
+python fl_evaluate.py
+// organize and gather the localization results
+fl_evaluate_f1.ipynb
+// Follow the notebook to produce the results
+```
+
 ### Model Checkpoints:
 
 We provide the model checkpoints on three datasets (and additionally DESED dataset) in this [link](). Feel free to download and test it.
@@ -134,3 +144,4 @@ We provide the model checkpoints on three datasets (and additionally DESED datas
   booktitle = {{ICASSP} 2022}
 }
 ```
+Our work is based on [Swin Transformer](https://github.com/microsoft/Swin-Transformer), which is a famous image classification transformer model.

@@ -1,0 +1,16 @@
+h5py==3.6.0
+librosa==0.8.1
+matplotlib==3.5.1
+museval==0.4.0
+numpy==1.22.0
+pandas==1.4.0
+pytorch_lightning==1.5.9
+scikit_learn==1.0.2
+scipy==1.7.3
+soundfile==0.10.3.post1
+tensorboard==2.8.0
+torch==1.10.2
+torchaudio==0.10.2
+torchcontrib==0.0.2
+torchlibrosa==0.0.9
+tqdm==4.62.3

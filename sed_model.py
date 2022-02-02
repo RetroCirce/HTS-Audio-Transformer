@@ -259,7 +259,7 @@ class Ensemble_SEDWrapper(pl.LightningModule):
         if self.config.fl_local or self.config.dataset_type != "audioset": 
             shift_num = 1 # framewise localization cannot allow the time shifting
         else:
-            shift_num = 1
+            shift_num = 10
         for i in range(shift_num):
             pred, pred_map = self.sed_models[sed_index](x)
             pred_maps.append(pred_map.unsqueeze(0))

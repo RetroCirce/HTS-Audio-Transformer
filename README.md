@@ -134,7 +134,7 @@ fl_evaluate_f1.ipynb
 
 ### Model Checkpoints:
 
-We provide the model checkpoints on three datasets (and additionally DESED dataset) in this [link](). Feel free to download and test it.
+We provide the model checkpoints on three datasets (and additionally DESED dataset) in this [link](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing). Feel free to download and test it.
 
 ## Citing
 ```

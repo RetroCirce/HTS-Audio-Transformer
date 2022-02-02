@@ -4,7 +4,7 @@
 # The configuration for training the model
 
 exp_name = "exp_htsat_pretrain" # the saved ckpt prefix name of the model 
-workspace = "/home/kechen/Research/TSCAM_SED/tscam_sed" # the folder of your code
+workspace = "/home/kechen/Research/HTSAT" # the folder of your code
 dataset_path = "/home/Research/audioset" # the dataset path
 desed_folder = "/home/Research/DESED" # the desed file
 

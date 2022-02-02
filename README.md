@@ -41,6 +41,7 @@ change the classes_num to 527
 ```
 ./create_index.sh # 
 // remember to change the pathes in the script
+// more information about this script is in https://github.com/qiuqiangkong/audioset_tagging_cnn
 
 python main.py save_idc 
 // count the number of samples in each class and save the npy files

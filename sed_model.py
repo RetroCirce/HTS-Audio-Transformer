@@ -65,15 +65,21 @@ class SEDWrapper(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         self.device_type = next(self.parameters()).device
-        mix_lambda = torch.from_numpy(get_mix_lambda(0.5, len(batch["waveform"]))).to(self.device_type)
+        if self.config.dataset_type == "audioset":
+            mix_lambda = torch.from_numpy(get_mix_lambda(0.5, len(batch["waveform"]))).to(self.device_type)
+        else:
+            mix_lambda = None
+
         # Another Choice: also mixup the target, but AudioSet is not a perfect data
         # so "adding noise" might be better than purly "mix"
         # batch["target"] = do_mixup_label(batch["target"])
         # batch["target"] = do_mixup(batch["target"], mix_lambda)
+        
         pred, _ = self(batch["waveform"], mix_lambda)
         loss = self.loss_func(pred, batch["target"])
         self.log("loss", loss, on_epoch= True, prog_bar=True)
         return loss
+        
     def training_epoch_end(self, outputs):
         # Change: SWA, deprecated
         # for opt in self.trainer.optimizers:
@@ -91,9 +97,12 @@ class SEDWrapper(pl.LightningModule):
         self.device_type = next(self.parameters()).device
         pred = torch.cat([d[0] for d in validation_step_outputs], dim = 0)
         target = torch.cat([d[1] for d in validation_step_outputs], dim = 0)
-        gather_pred = [torch.zeros_like(pred) for _ in range(dist.get_world_size())]
-        gather_target = [torch.zeros_like(target) for _ in range(dist.get_world_size())]
-        dist.barrier()
+
+        if torch.cuda.device_count() > 1:
+            gather_pred = [torch.zeros_like(pred) for _ in range(dist.get_world_size())]
+            gather_target = [torch.zeros_like(target) for _ in range(dist.get_world_size())]
+            dist.barrier()
+
         if self.config.dataset_type == "audioset":
             metric_dict = {
                 "mAP": 0.,
@@ -104,23 +113,39 @@ class SEDWrapper(pl.LightningModule):
             metric_dict = {
                 "acc":0.
             }
-        dist.all_gather(gather_pred, pred)
-        dist.all_gather(gather_target, target)
-        if dist.get_rank() == 0:
-            gather_pred = torch.cat(gather_pred, dim = 0).cpu().numpy()
-            gather_target = torch.cat(gather_target, dim = 0).cpu().numpy()
+        if torch.cuda.device_count() > 1:
+            dist.all_gather(gather_pred, pred)
+            dist.all_gather(gather_target, target)
+            if dist.get_rank() == 0:
+                gather_pred = torch.cat(gather_pred, dim = 0).cpu().numpy()
+                gather_target = torch.cat(gather_target, dim = 0).cpu().numpy()
+                if self.config.dataset_type == "scv2":
+                    gather_target = np.argmax(gather_target, 1)
+                metric_dict = self.evaluate_metric(gather_pred, gather_target)
+                print(self.device_type, dist.get_world_size(), metric_dict, flush = True)
+        
+            if self.config.dataset_type == "audioset":
+                self.log("mAP", metric_dict["mAP"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
+                self.log("mAUC", metric_dict["mAUC"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
+                self.log("dprime", metric_dict["dprime"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
+            else:
+                self.log("acc", metric_dict["acc"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
+            dist.barrier()
+        else:
+            gather_pred = pred.cpu().numpy()
+            gather_target = target.cpu().numpy()
             if self.config.dataset_type == "scv2":
                 gather_target = np.argmax(gather_target, 1)
             metric_dict = self.evaluate_metric(gather_pred, gather_target)
-            print(self.device_type, dist.get_world_size(), metric_dict, flush = True)
+            print(self.device_type, metric_dict, flush = True)
         
-        if self.config.dataset_type == "audioset":
-            self.log("mAP", metric_dict["mAP"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
-            self.log("mAUC", metric_dict["mAUC"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
-            self.log("dprime", metric_dict["dprime"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
-        else:
-            self.log("acc", metric_dict["acc"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
-        dist.barrier()
+            if self.config.dataset_type == "audioset":
+                self.log("mAP", metric_dict["mAP"], on_epoch = True, prog_bar=True, sync_dist=False)
+                self.log("mAUC", metric_dict["mAUC"], on_epoch = True, prog_bar=True, sync_dist=False)
+                self.log("dprime", metric_dict["dprime"], on_epoch = True, prog_bar=True, sync_dist=False)
+            else:
+                self.log("acc", metric_dict["acc"], on_epoch = True, prog_bar=True, sync_dist=False)
+            
         
     def time_shifting(self, x, shift_len):
         shift_len = int(shift_len)

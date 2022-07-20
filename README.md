@@ -28,6 +28,13 @@ In this paper, we devise a model, HTS-AT, by combining a [swin transformer](http
 pip install -r requirements.txt
 ```
 
+We do not include the installation of PyTorch in the requirment, since different machines require different vereions of CUDA and Toolkits. So make sure you install the PyTorch from [the official guidance](https://pytorch.org/).
+
+Install the 'SOX' and the 'ffmpeg', we recommend that you run this code in Linux inside the Conda environment. In that, you can install them by:
+```
+sudo apt install sox 
+conda install -c conda-forge ffmpeg
+```
 ### Download and Processing Datasets
 
 * config.py
@@ -107,7 +114,7 @@ fl_dataset = "Your DESED npy file"
 
 ### Train and Evaluation
 
-**Notice: Our model is run on DDP mode and requires at least two GPU cards. If you want to use a single GPU for training and evaluation, you need to mannually change *sed_model.py* and *main.py***
+**Notice: Our model is now supporting the single GPU.**
 
 All scripts is run by main.py:
 ```

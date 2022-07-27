@@ -73,6 +73,7 @@ The script *config.py* contains all configurations you need to assign to run you
 Please read the introduction comments in the file and change your settings.
 
 **IMPORTANT NOTICE**
+
 Similar to many transformer structures, the HTS-AT needs **warm-up** otherwise the model will underfit in the beginning. To find a propoer warm-up step or warm-up epoch, please pay attention to [these two hyperparameters](https://github.com/RetroCirce/HTS-Audio-Transformer/blob/a6caae40149bd6667b0d898793bdeaf7c26bda47/config.py#L33-L34) in the configuration file. The default settings works for the full AudioSet (2.2M data samples). If your working dataset contains different size of samples (e.g. 100K, 1M, 10M, etc.), you might need to change a proper warm-up step or epoch. 
 
 For the most important part:

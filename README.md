@@ -22,7 +22,31 @@ In this paper, we devise a model, HTS-AT, by combining a [swin transformer](http
 
 
 ## Getting Started
-
+### cog quick start inference on the pretrained model
+1. Download `	HTSAT_AudioSet_Saved_1.ckpt` from [link](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing). 
+2. Install [cog](https://github.com/replicate/cog)
+3. run `cog predict -i audio=@{wav_file} --use-cog-base-image=false`
+4. expected output
+```
+Running prediction...
+[
+  [
+    137,
+    "Music",
+    0.5800321102142334
+  ],
+  [
+    0,
+    "Speech",
+    0.5537758469581604
+  ],
+  [
+    472,
+    "Whip",
+    0.5477684736251831
+  ]
+]
+```
 ### Install Requirments
 ```
 pip install -r requirements.txt

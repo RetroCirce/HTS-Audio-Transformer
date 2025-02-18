@@ -249,14 +249,21 @@ class SEDWrapper(pl.LightningModule):
                 else:
                     lr_scale = self.config.lr_rate[lr_pos]
             return lr_scale
-        scheduler = optim.lr_scheduler.LambdaLR(
-            optimizer,
-            lr_lambda=lr_foo
-        )
+
+        #scheduler = optim.lr_scheduler.LambdaLR(
+        #   optimizer,
+        #    lr_lambda=lr_foo
+        #)
+        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda epoch: 0.95 ** epoch)
         
-        return [optimizer], [scheduler]
-
-
+        return {
+            "optimizer": optimizer,
+            "lr_scheduler": {
+            	"scheduler": scheduler,
+            	"interval": "epoch",  # or "step" if you want to update it every batch
+                "frequency": 1
+            }
+        }
 
 class Ensemble_SEDWrapper(pl.LightningModule):
     def __init__(self, sed_models, config, dataset):
@@ -385,5 +392,3 @@ class Ensemble_SEDWrapper(pl.LightningModule):
                 self.log("acc", metric_dict["acc"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
             dist.barrier()
 
-
-    

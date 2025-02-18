@@ -17,9 +17,10 @@ loss_type = "clip_ce" #
 
 # trained from a checkpoint, or evaluate a single model 
 resume_checkpoint = "./workspace/ckpt/htsat_audioset_pretrain.ckpt"
+#resume_checkpoint = None 
 # "/home/Research/model_backup/AudioSet/HTSAT_AudioSet_Saved_1.ckpt"
  
-esc_fold = 0 # just for esc dataset, select the fold you need for evaluation and (+1) validation
+esc_fold = 1 # just for esc dataset, select the fold you need for evaluation and (+1) validation
 
 
 debug = False
@@ -60,7 +61,7 @@ fmax = 14000
 shift_max = int(clip_samples * 0.5)
 
 # for data collection
-classes_num = 50 # esc: 50 | audioset: 527 | scv2: 35
+classes_num = 527 # esc: 50 | audioset: 527 | scv2: 35
 patch_size = (25, 4) # deprecated
 crop_size = None # int(clip_samples * 0.5) deprecated
 

@@ -94,10 +94,9 @@ If you are running on Linux, ensure that **SOX** and **ffmpeg** are installed. A
 sudo apt install sox
 conda install -c conda-forge ffmpeg
 ```
-
 ---
 
-## Downloading and Processing Datasets
+### Downloading and Processing Datasets
 
 Before starting training or evaluation, you must prepare your datasets. Edit the `config.py` file to modify the following variables:
 
@@ -105,7 +104,7 @@ Before starting training or evaluation, you must prepare your datasets. Edit the
 - **`desed_folder`**: Path to your DESED folder (if applicable).
 - **`classes_num`**: Number of classes (e.g., 527 for AudioSet).
 
-### AudioSet
+#### AudioSet
 
 1. **Index the Data:**
 
@@ -123,15 +122,15 @@ Before starting training or evaluation, you must prepare your datasets. Edit the
    python main.py save_idc
    ```
 
-### ESC-50
+#### ESC-50
 
 Open the notebook `esc-50/prep_esc50.ipynb` and run the cells to process the dataset.
 
-### Speech Command V2
+#### Speech Command V2
 
 Open the notebook `scv2/prep_scv2.ipynb` and run the cells to process the dataset.
 
-### DESED Dataset
+#### DESED Dataset
 
 Generate the `.npy` data files from the DESED dataset by running:
 
@@ -141,45 +140,20 @@ python convert_desed.py
 
 ---
 
-## Model Checkpoints
+### Model Checkpoints
 
 Pre-trained model [checkpoints](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing) for AudioSet, ESC-50, Speech Command V2, and DESED are provided. Feel free to download and test these checkpoints.
 
 ---
 
-## HTS-ESC Training Notebook
-
-This repository also includes the `htsat_esc_training.ipynb` notebook, which is specifically designed for training the model on the ESC-50 dataset. To prepare and use this notebook:
-
-1. **Configure for ESC-50:**  
-   Open `config.py` and set the following parameters for ESC-50:
-   ```python
-   dataset_path   = "path/to/your/processed/esc50"
-   dataset_type   = "esc-50"
-   loss_type      = "clip_ce"
-   sample_rate    = 32000
-   hop_size       = 320
-   classes_num    = 50
-   ```
-2. **Open the Notebook:**  
-   Launch Jupyter Notebook:
-   ```bash
-   jupyter notebook
-   ```
-   and open the `htsat_esc_training.ipynb` file located in the repository root.
-3. **Run the Cells:**  
-   Execute each cell sequentially. The notebook handles data preprocessing, model initialization, and training specific to the ESC-50 dataset. Follow the inline comments for detailed guidance.
-
----
-
-## Configuration (`config.py`)
+### Configuration (`config.py`)
 
 The `config.py` file contains all the configuration settings required to run the code. Read the introductory comments in the file and adjust the settings according to your needs.
 
 > **IMPORTANT:**  
 > Like many Transformer-based models, HTS-AT requires a warm-up phase to prevent underfitting at the beginning of training. The default settings are tuned for the full AudioSet (2.2M samples). If your dataset size differs (e.g., 100K, 1M, 10M samples, etc.), you might need to adjust the warm-up steps or epochs accordingly.
 
-### Example Configurations
+#### Example Configurations
 
 - **AudioSet:**
 
@@ -227,7 +201,7 @@ The `config.py` file contains all the configuration settings required to run the
 
 ---
 
-## Training and Evaluation
+### Training and Evaluation
 
 > **Note:** The model currently supports single GPU training/testing.
 
@@ -261,7 +235,7 @@ All scripts are executed via `main.py`.
 
 ---
 
-## Localization on DESED
+### Localization on DESED
 
 To perform localization on the DESED dataset:
 
@@ -281,6 +255,29 @@ To perform localization on the DESED dataset:
 4. You can also use the notebook `fl_evaluate_f1.ipynb` to produce the final localization results.
 
 ---
+
+### HTS-ESC Training Notebook
+
+This repository also includes the `htsat_esc_training.ipynb` notebook, which is specifically designed for training the model on the ESC-50 dataset. To prepare and use this notebook:
+
+1. **Configure for ESC-50:**  
+   Open `config.py` and set the following parameters for ESC-50:
+   ```python
+   dataset_path   = "path/to/your/processed/esc50"
+   dataset_type   = "esc-50"
+   loss_type      = "clip_ce"
+   sample_rate    = 32000
+   hop_size       = 320
+   classes_num    = 50
+   ```
+2. **Open the Notebook:**  
+   Launch Jupyter Notebook:
+   ```bash
+   jupyter notebook
+   ```
+   and open the `htsat_esc_training.ipynb` file located in the repository root.
+3. **Run the Cells:**  
+   Execute each cell sequentially. The notebook handles data preprocessing, model initialization, and training specific to the ESC-50 dataset. Follow the inline comments for detailed guidance.
 
 ## Citing
 

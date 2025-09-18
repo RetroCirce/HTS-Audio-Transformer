@@ -151,6 +151,12 @@ python convert_desed.py
 
 ---
 
+## Model Checkpoints
+
+Pre-trained model [checkpoints](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing) for AudioSet, ESC-50, Speech Command V2, and DESED are provided. Feel free to download and test these checkpoints.
+
+---
+
 ## HTS-ESC Training Notebook
 
 This repository also includes the `htsat_esc_training.ipynb` notebook, which is specifically designed for training the model on the ESC-50 dataset. To prepare and use this notebook:
@@ -283,12 +289,6 @@ To perform localization on the DESED dataset:
    ```
 
 4. You can also use the notebook `fl_evaluate_f1.ipynb` to produce the final localization results.
-
----
-
-## Model Checkpoints
-
-Pre-trained model checkpoints for AudioSet, ESC-50, Speech Command V2, and DESED are provided. Feel free to download and test these checkpoints.
 
 ---
 

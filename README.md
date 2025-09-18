@@ -23,19 +23,7 @@ In this paper, we devise a model, HTS-AT, by combining a [swin transformer](http
 
 Below is the updated README in English with added instructions for preparing the `htsat_esc_training.ipynb` file:
 
----
-
-# HTS-Audio-Transformer
-
-Installation is performed via Conda and Pip, and configuration is managed in the `config.py` file.
-
-> **Note:** This repository is a refactored version of [RetroCirce/HTS-Audio-Transformer](https://github.com/RetroCirce/HTS-Audio-Transformer) with a streamlined organization for easier installation and usage.
-
----
-
 ## Getting Started
-
----
 
 ### Quick Inference Script
 If you only want to start a quick inference setup for your audio, please refer to this script. Thanks [@allenhung1025](https://github.com/allenhung1025) for contribuing this.
@@ -65,8 +53,6 @@ Running prediction...
 
 ```
 ### Need More? 
-
----
 
 #### 1. Env Setup
 

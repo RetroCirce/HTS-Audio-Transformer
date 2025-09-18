@@ -256,8 +256,6 @@ class SEDWrapper(pl.LightningModule):
         
         return [optimizer], [scheduler]
 
-
-
 class Ensemble_SEDWrapper(pl.LightningModule):
     def __init__(self, sed_models, config, dataset):
         super().__init__()
@@ -385,5 +383,3 @@ class Ensemble_SEDWrapper(pl.LightningModule):
                 self.log("acc", metric_dict["acc"] * float(dist.get_world_size()), on_epoch = True, prog_bar=True, sync_dist=True)
             dist.barrier()
 
-
-    

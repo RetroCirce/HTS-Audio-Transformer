@@ -35,6 +35,8 @@ Installation is performed via Conda and Pip, and configuration is managed in the
 
 ## Getting Started
 
+---
+
 ### Quick Inference Script
 If you only want to start a quick inference setup for your audio, please refer to this script. Thanks [@allenhung1025](https://github.com/allenhung1025) for contribuing this.
 1. Download the checkpoint "HTSAT_AudioSet_Saved_1.ckpt" from [link](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing). 
@@ -63,6 +65,8 @@ Running prediction...
 
 ```
 ### Need More? 
+
+---
 
 #### 1. Env Setup
 

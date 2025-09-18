@@ -35,15 +35,52 @@ Installation is performed via Conda and Pip, and configuration is managed in the
 
 ## Getting Started
 
-### Installation
+### Quick Inference Script
+If you only want to start a quick inference setup for your audio, please refer to this script. Thanks [@allenhung1025](https://github.com/allenhung1025) for contribuing this.
+1. Download the checkpoint "HTSAT_AudioSet_Saved_1.ckpt" from [link](https://drive.google.com/drive/folders/1f5VYMk0uos_YnuBshgmaTVioXbs7Kmz6?usp=sharing). 
+2. Install [cog](https://github.com/replicate/cog)
+3. run `cog predict -i audio=@{wav_file} --use-cog-base-image=false`
+4. expected output
+```
+Running prediction...
+[
+  [
+    137,
+    "Music",
+    0.5800321102142334
+  ],
+  [
+    0,
+    "Speech",
+    0.5537758469581604
+  ],
+  [
+    472,
+    "Whip",
+    0.5477684736251831
+  ]
+]
 
-#### 1. Create the Conda Environment
+```
+### Need More? 
 
-Create an environment (replace `your_env_name` with your desired environment name) with all the necessary dependencies:
+#### 1. Env Setup
+
+You can install dependencies via:
+```
+pip install -r requirements.txt
+```
+
+Here we do not include the installation of PyTorch in the requirment, since different machines require different vereions of CUDA and Toolkits. So make sure you install the PyTorch from [the official guidance](https://pytorch.org/).
+
+Another way is to create a conda environment (replace `your_env_name` with your desired environment name) with all the necessary dependencies:
 
 ```bash
 conda create -n your_env_name -c pytorch -c nvidia -c conda-forge pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.4 sox ffmpeg h5py=3.6.0 librosa==0.8.1 matplotlib==3.5.1 numpy==1.22 pandas==1.4.0 scikit-learn==1.0.2 scipy==1.7.3 tensorboard==2.8.0 pytorch-lightning==1.5.9
+
 ```
+
+Here we use pytorch 2.5.1 as an example.
 
 Activate the environment:
 

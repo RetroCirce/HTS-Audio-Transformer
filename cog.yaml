@@ -1,0 +1,26 @@
+build:
+  python_version: "3.9"
+  python_packages:
+    - h5py==3.9.0
+    - librosa==0.8.1
+    - matplotlib==3.5.1
+    - museval==0.4.0
+    - numpy==1.22.0
+    - pandas==1.4.0
+    - pytorch_lightning==1.5.9
+    - scikit_learn==1.0.2
+    - scipy==1.7.3
+    - soundfile==0.10.3.post1
+    - tensorboard==2.8.0
+    - torchcontrib==0.0.2
+    - torchlibrosa==0.0.9
+    - tqdm==4.62.3
+    - wget
+    - notebook
+    - ipywidgets
+    - gdown
+  run:
+    - apt-get update
+    - apt-get install -y libsndfile1
+    - apt-get install -y ffmpeg
+predict: "predict.py:Predictor"

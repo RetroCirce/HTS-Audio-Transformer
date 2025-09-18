@@ -60,7 +60,7 @@ fmax = 14000
 shift_max = int(clip_samples * 0.5)
 
 # for data collection
-classes_num = 50 # esc: 50 | audioset: 527 | scv2: 35
+classes_num = 527 # esc: 50 | audioset: 527 | scv2: 35
 patch_size = (25, 4) # deprecated
 crop_size = None # int(clip_samples * 0.5) deprecated
 

@@ -146,7 +146,7 @@ Open the notebook `scv2/prep_scv2.ipynb` and run the cells to process the datase
 Generate the `.npy` data files from the DESED dataset by running:
 
 ```bash
-python conver_desed.py
+python convert_desed.py
 ```
 
 ---
